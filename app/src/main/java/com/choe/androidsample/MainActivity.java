@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.widget.EditText;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final  String TAG = "StateChange" ;
+
+    final EditText textBox = (EditText)findViewById(R.id.editText);
 
 
     @Override

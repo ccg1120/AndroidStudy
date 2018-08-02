@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
+        android:saveEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="55dp" />
