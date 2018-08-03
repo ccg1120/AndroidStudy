@@ -1,6 +1,15 @@
 package com.choe.androidsample;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.Camera;
+
+import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,14 +19,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.LENGTH_SHORT;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     private static final  String TAG = "StateChange" ;
 
-
-
+    //private UsbManager usbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -25,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Toast.makeText(this, "USB 연결", LENGTH_SHORT).show();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -36,7 +50,27 @@ public class MainActivity extends AppCompatActivity {
         });
         Log.i(TAG,"OnCreate");
 
+        registerReceiver(mUsbDeviceReceiver, new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED));
     }
+
+    private final BroadcastReceiver mUsbDeviceReceiver =
+            new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                    String action = intent.getAction();
+                    if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
+
+
+                        Toast.makeText(context, "USB 연결", LENGTH_SHORT).show();
+
+                    }else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
+
+                        Toast.makeText(context, "USB 연결1", LENGTH_LONG).show();
+
+                    }
+                }
+            };
 
     @Override
     protected void onStart() {
