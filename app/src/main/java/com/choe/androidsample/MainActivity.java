@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static android.widget.Toast.LENGTH_LONG;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity  {
 
     private static final  String TAG = "StateChange" ;
 
-    //private UsbManager usbManager;
+
+    private UsbManager usbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity  {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Toast.makeText(this, "USB 연결", LENGTH_SHORT).show();
+        //Toast.makeText(this, "USB 연결", LENGTH_SHORT).show();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +52,12 @@ public class MainActivity extends AppCompatActivity  {
         });
         Log.i(TAG,"OnCreate");
 
+        TextView text = (TextView) findViewById(R.id.textView1);
+
         registerReceiver(mUsbDeviceReceiver, new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED));
+        Toast.makeText(this, "USB 연결 리스트 :" + usbManager.getAccessoryList().length, LENGTH_SHORT).show();
+
+        text.setText("USB 연결 리스트 :" + usbManager.getAccessoryList().length);
     }
 
     private final BroadcastReceiver mUsbDeviceReceiver =
