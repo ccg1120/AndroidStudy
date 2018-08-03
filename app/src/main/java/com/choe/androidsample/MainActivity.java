@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final  String TAG = "StateChange" ;
 
-    final EditText textBox = (EditText)findViewById(R.id.editText);
+
 
 
     @Override
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Log.i(TAG,"OnCreate");
+
     }
 
     @Override
@@ -77,12 +78,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.i(TAG,"OnSaveInstanceState");
+
+        final EditText textBox = (EditText)findViewById(R.id.editText);
+
+        CharSequence userText = textBox.getText();
+
+        outState.putCharSequence("SavedText",userText);
+
+
+
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.i(TAG,"OnRestoreInstanceState");
+        final  EditText textBox1 = (EditText)findViewById(R.id.editText);
+
+        CharSequence userText = savedInstanceState.getCharSequence("SavedText");
+        textBox1.setText(userText);
     }
 
     @Override
